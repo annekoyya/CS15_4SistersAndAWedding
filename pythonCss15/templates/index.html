@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Banking System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #6f42c1;
+            --light-bg: #f8f9fa;
+            --border-color: #e9ecef;
+        }
+        
+        body {
+            background-color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #333;
+            line-height: 1.5;
+        }
+        
+        .container-main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .main-title {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .summary-section {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .summary-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #666;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .total-balance {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .account-count {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 0;
+        }
+        
+        .divider {
+            height: 1px;
+            background-color: var(--border-color);
+            margin: 25px 0;
+        }
+        
+        .add-account-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 12px 24px;
+            font-size: 1rem;
+            font-weight: 500;
+            width: 100%;
+            margin-bottom: 30px;
+            transition: background-color 0.2s;
+        }
+        
+        .add-account-btn:hover {
+            background-color: #5a32a3;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .accounts-section {
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .accounts-header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .accounts-body {
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .empty-state {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        .account-card {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            background: white;
+        }
+        
+        .account-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .account-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+        
+        .account-type {
+            background-color: #e9ecef;
+            color: #666;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .account-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .account-detail {
+            text-align: left;
+        }
+        
+        .detail-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .detail-value {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        .account-balance {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            text-align: left;
+            margin-bottom: 15px;
+        }
+        
+        .account-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .action-btn {
+            flex: 1;
+            padding: 8px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: white;
+            color: #333;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .action-btn:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .action-btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .action-btn.primary:hover {
+            background-color: #5a32a3;
+        }
+        
+        .modal-content {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .modal-header {
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px;
+        }
+        
+        .modal-title {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 10px 12px;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(111, 66, 193, 0.1);
+        }
+        
+        .modal-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 20px;
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-main">
+        <!-- Header -->
+        <div class="header">
+            <h1 class="main-title">Banking System</h1>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <div class="summary-title">Total Balance</div>
+            <div class="total-balance" id="totalBalance">$0.00</div>
+            <div class="account-count" id="totalAccounts">0 accounts</div>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Add Account Button -->
+        <button class="add-account-btn" onclick="showAddAccountModal()">
+            + Add New Account
+        </button>
+
+        <!-- Accounts Section -->
+        <div class="section-title">Bank Accounts</div>
+        <div class="accounts-section">
+            <div id="accountsList">
+                <!-- Empty State -->
+                <div class="accounts-body">
+                    <div class="empty-state">No accounts yet</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add/Edit Account Modal -->
+    <div class="modal fade" id="accountModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="accountModalTitle">Add New Account</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="accountForm">
+                        <input type="hidden" id="accountId">
+                        <div class="mb-3">
+                            <label for="accountNumber" class="form-label">Account Number *</label>
+                            <input type="text" class="form-control" id="accountNumber" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="holderName" class="form-label">Account Name *</label>
+                            <input type="text" class="form-control" id="holderName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="accountType" class="form-label">Account Type *</label>
+                            <select class="form-select" id="accountType" required>
+                                <option value="">Select Type</option>
+                                <option value="Savings">Savings</option>
+                                <option value="Checking">Checking</option>
+                                <option value="Business">Business</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="balance" class="form-label">Initial Balance *</label>
+                            <input type="number" class="form-control" id="balance" step="0.01" min="0" required>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveAccount()">Save Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Modal -->
+    <div class="modal fade" id="transactionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="transactionModalTitle">Deposit Money</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="transactionForm">
+                        <input type="hidden" id="transactionAccountId">
+                        <div class="mb-3">
+                            <label for="transactionType" class="form-label">Transaction Type</label>
+                            <select class="form-select" id="transactionType" onchange="updateTransactionTitle()">
+                                <option value="deposit">Deposit</option>
+                                <option value="withdraw">Withdraw</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Amount *</label>
+                            <input type="number" class="form-control" id="amount" step="0.01" min="0.01" required>
+                        </div>
+                        <div class="alert alert-info">
+                            Current Balance: $<span id="currentBalance">0.00</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="processTransaction()">Process Transaction</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // Global variables
+    let accounts = [];
+    let accountModal = null;
+    let transactionModal = null;
+
+    // Initialize application
+    document.addEventListener('DOMContentLoaded', function() {
+        accountModal = new bootstrap.Modal(document.getElementById('accountModal'));
+        transactionModal = new bootstrap.Modal(document.getElementById('transactionModal'));
+        loadAccounts();
+        loadSummary();
+    });
+
+    // Load all accounts from backend
+    async function loadAccounts() {
+        try {
+            const response = await fetch('/api/accounts');
+            if (!response.ok) throw new Error('Failed to load accounts');
+            
+            accounts = await response.json();
+            displayAccounts();
+            loadSummary();
+        } catch (error) {
+            console.error('Error loading accounts:', error);
+            alert('Error loading accounts: ' + error.message);
+        }
+    }
+
+    // Load summary data
+    async function loadSummary() {
+        try {
+            const response = await fetch('/api/summary');
+            if (!response.ok) throw new Error('Failed to load summary');
+            
+            const summary = await response.json();
+            
+            document.getElementById('totalBalance').textContent = `$${summary.total_balance.toFixed(2)}`;
+            document.getElementById('totalAccounts').textContent = `${summary.total_accounts} accounts`;
+        } catch (error) {
+            console.error('Error loading summary:', error);
+        }
+    }
+
+    // Display accounts in the UI
+    function displayAccounts() {
+        const accountsList = document.getElementById('accountsList');
+        
+        if (accounts.length === 0) {
+            accountsList.innerHTML = `
+                <div class="accounts-body">
+                    <div class="empty-state">No accounts yet</div>
+                </div>
+            `;
+            return;
+        }
+
+        // Clear existing content
+        accountsList.innerHTML = '';
+        
+        // Create account cards for each account
+        accounts.forEach(account => {
+            const accountCard = createAccountCard(account);
+            accountsList.appendChild(accountCard);
+        });
+    }
+
+    // Create account card HTML
+    function createAccountCard(account) {
+        const accountDiv = document.createElement('div');
+        accountDiv.className = 'account-card';
+        
+        accountDiv.innerHTML = `
+            <div class="account-header">
+                <div class="account-name">${account.holder_name}</div>
+                <div class="account-type">${account.account_type}</div>
+            </div>
+            <div class="account-details">
+                <div class="account-detail">
+                    <div class="detail-label">Account Number</div>
+                    <div class="detail-value">${account.account_number}</div>
+                </div>
+                <div class="account-detail">
+                    <div class="detail-label">Type</div>
+                    <div class="detail-value">${account.account_type}</div>
+                </div>
+            </div>
+            <div class="account-balance">$${account.balance.toFixed(2)}</div>
+            <div class="account-actions">
+                <button class="action-btn primary" onclick="showTransactionModal(${account.id}, 'deposit')">
+                    Deposit
+                </button>
+                <button class="action-btn" onclick="showTransactionModal(${account.id}, 'withdraw')">
+                    Withdraw
+                </button>
+                <button class="action-btn" onclick="editAccount(${account.id})">
+                    Edit
+                </button>
+                <button class="action-btn" onclick="deleteAccount(${account.id})" style="color: #dc3545;">
+                    Delete
+                </button>
+            </div>
+        `;
+        
+        return accountDiv;
+    }
+
+    // Show add account modal
+    function showAddAccountModal() {
+        document.getElementById('accountModalTitle').textContent = 'Add New Account';
+        document.getElementById('accountForm').reset();
+        document.getElementById('accountId').value = '';
+        document.getElementById('accountNumber').readOnly = false;
+        accountModal.show();
+    }
+
+    // Edit account
+    function editAccount(accountId) {
+        const account = accounts.find(acc => acc.id === accountId);
+        if (!account) {
+            alert('Account not found');
+            return;
+        }
+        
+        document.getElementById('accountModalTitle').textContent = 'Edit Account';
+        document.getElementById('accountId').value = account.id;
+        document.getElementById('accountNumber').value = account.account_number;
+        document.getElementById('holderName').value = account.holder_name;
+        document.getElementById('accountType').value = account.account_type;
+        document.getElementById('balance').value = account.balance;
+        
+        // Make account number read-only when editing
+        document.getElementById('accountNumber').readOnly = true;
+        
+        accountModal.show();
+    }
+
+    // Save account (create or update)
+    async function saveAccount() {
+        const form = document.getElementById('accountForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
+        const accountId = document.getElementById('accountId').value;
+        const accountData = {
+            account_number: document.getElementById('accountNumber').value,
+            holder_name: document.getElementById('holderName').value,
+            account_type: document.getElementById('accountType').value,
+            balance: parseFloat(document.getElementById('balance').value)
+        };
+        
+        try {
+            let response;
+            let url;
+            let method;
+            
+            if (accountId) {
+                // Update existing account
+                url = `/api/accounts/${accountId}`;
+                method = 'PUT';
+            } else {
+                // Create new account
+                url = '/api/accounts';
+                method = 'POST';
+            }
+            
+            response = await fetch(url, {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(accountData)
+            });
+            
+            if (response.ok) {
+                accountModal.hide();
+                await loadAccounts(); // Reload accounts to show the new/updated account
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error saving account:', error);
+            alert('Error saving account: ' + error.message);
+        }
+    }
+
+    // Delete account
+    async function deleteAccount(accountId) {
+        if (!confirm('Are you sure you want to delete this account?')) {
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/accounts/${accountId}`, {
+                method: 'DELETE'
+            });
+            
+            if (response.ok) {
+                await loadAccounts(); // Reload accounts to reflect the deletion
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error deleting account:', error);
+            alert('Error deleting account: ' + error.message);
+        }
+    }
+
+    // Show transaction modal
+    function showTransactionModal(accountId, type) {
+        const account = accounts.find(acc => acc.id === accountId);
+        if (!account) {
+            alert('Account not found');
+            return;
+        }
+        
+        document.getElementById('transactionAccountId').value = accountId;
+        document.getElementById('transactionType').value = type;
+        document.getElementById('currentBalance').textContent = account.balance.toFixed(2);
+        document.getElementById('amount').value = '';
+        
+        updateTransactionTitle();
+        transactionModal.show();
+    }
+
+    // Update transaction modal title
+    function updateTransactionTitle() {
+        const type = document.getElementById('transactionType').value;
+        const title = type === 'deposit' ? 'Deposit Money' : 'Withdraw Money';
+        document.getElementById('transactionModalTitle').textContent = title;
+    }
+
+    // Process transaction
+    async function processTransaction() {
+        const form = document.getElementById('transactionForm');
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+        
+        const accountId = document.getElementById('transactionAccountId').value;
+        const type = document.getElementById('transactionType').value;
+        const amount = parseFloat(document.getElementById('amount').value);
+        
+        if (amount <= 0) {
+            alert('Amount must be greater than 0');
+            return;
+        }
+        
+        try {
+            const response = await fetch(`/api/accounts/${accountId}/${type}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount })
+            });
+            
+            if (response.ok) {
+                transactionModal.hide();
+                await loadAccounts(); // Reload accounts to show updated balance
+            } else {
+                const errorData = await response.json();
+                alert(`Error: ${errorData.error}`);
+            }
+        } catch (error) {
+            console.error('Error processing transaction:', error);
+            alert('Error processing transaction: ' + error.message);
+        }
+    }
+</script>
+</body>
+</html>
