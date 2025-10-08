@@ -1,9 +1,9 @@
 # CS15_4SistersAndAWedding
 Group Members
 
-Arzadon, Dranreb Jay
-Cabarde, Joanne Faith
-Dumalogdog, Annika Lois
-Peralta, Gwendolyn Lianna
-Pesaña, Julie Anne
+1. Arzadon, Dranreb Jay
+2. Cabarde, Joanne Faith
+3. Dumalogdog, Annika Lois
+4. Peralta, Gwendolyn Lianna
+5. Pesaña, Julie Anne
 
