@@ -1,4 +1,4 @@
-# CS15_4SistersAndAWedding <3
+# CS15_4SistersAndAWedding
 Group Members
 
 1. Arzadon, Dranreb Jay
