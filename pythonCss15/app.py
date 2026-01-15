@@ -64,7 +64,6 @@ class BankAccount:
         self.transactions.append(transaction)
         return True, f"Successfully withdrew ${amount:.2f}"
 
-# Sample initial data
 def initialize_sample_data():
     global accounts, account_counter
     accounts = [
@@ -73,7 +72,6 @@ def initialize_sample_data():
 
 initialize_sample_data()
 
-# Routes
 @app.route('/')
 def index():
     return render_template('index.html')
